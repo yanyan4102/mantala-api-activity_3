@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { protect, authorize } = require('../middleware/authMiddleware');
 
 // Import the Controller
 const {
@@ -12,13 +13,14 @@ const {
 
 const {getAllUsers, createUser} = require('../controllers/userController');
 
-router.get('/users', getAllUsers);
-router.post('/users', createUser);
 
-router.get('/transactions', getAllTransactions);
-router.post('/transactions', createTransaction);
-router.get('/transactions/:id', getTransactionById);
-router.put('/transactions/:id', updateTransaction);
-router.delete('/transactions/:id', deleteTransaction);
+router.get('/Users', getAllUsers);
+//router.get('/Users/:id', getAllTransactionById);
+
+
+router.post('/Users', protect, authorize('admin', 'manager'), createUser);
+router.post('/Transaction',  protect, authorize('admin', 'manager'), createTransaction);
+router.put('/Transaction/:id',  protect, authorize('admin', 'manager'), updateTransaction);
+router.delete('/Transaction/:id',  protect, authorize('admin', 'manager'), deleteTransaction);
 
 module.exports = router;

@@ -20,3 +20,26 @@
     I choose using the embedded in transactions because they're always read together and stay small. One query gets everything fast.
 18. - "Why did I choose to Reference the [Chef/User/Guest]?"
     For the Users I choose a referenced because one user has many transactions and needs independent queries. Keeps documents scalable.
+
+
+Securing API
+
+1. Authentication vs Authorization 
+What is the difference between Authentication and Authorization in our
+code?
+Answer: Authentication is the process of verifying if your a human user or a device. indeed who or what it claims to be. It is the "identity" phase of the transaction. While authorization is the process of determining what the user is permitted to do or which resources it is allowed to access. In short, authentication verifies your identity (login). authorization checks your permissions (admin only routes).
+
+2. Security (bcrypt) 
+Why did we use bcryptjs instead of saving passwords as plain text in
+MongoDB?
+Answer: If we use MongoDB, in storing passwords in plain text is a critical security failure. If a database is breached, plain text passwords allow attackers immediate access to all user accounts. So the web developer commonly used bcryptjs to prevent those problems.
+
+3. JWT Structure 
+What does the protect middleware do when it receives a JWT from the
+client?
+Answer:  When the protect middleware receives a JWT from the client, it:
+* It retrieves the token from the request header.
+* It uses a secret key to verify the signature. If the signature is valid, the server knows the token has not been        tampered with.
+* It decodes the payload to identify the user (usually via a user ID).
+* It checks if the token has expired.
+* I
